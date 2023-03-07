@@ -1,0 +1,46 @@
+* {
+    box-sizing: border-box;
+    border: 1px solid red;
+}
+
+main {
+    width: 90vmin;
+    height: 80vmin;
+    margin: auto;
+    display: grid;
+    grid-template-areas: 
+    "head head"
+    "dealer aside"
+    "player aside";
+    grid-template-columns: 4fr 1fr;
+    grid-template-rows: 1fr 2fr 2fr;
+    
+
+}
+
+/* main > div {
+    width: 60vmin;
+    height: 25vmin
+
+} */
+
+h1 {
+    grid-area: "head";
+    /* grid-column: span 2; */
+}
+
+aside {
+    grid-area: 'aside';
+}
+
+#dealer-hand {
+    grid-area: 'dealer';
+
+}
+
+#player-hand {
+    grid-area: 'player';
+    /* grid-column: 1;
+    grid-row: 3; */
+}
+

@@ -1,9 +1,12 @@
 //------- app state
 //// Set the inital state of necessary variables, these things all will most likely need to be rendered to the screen
 //// deck, playerHand, dealerHand
+
+
 //------ DOM elements
 //// Cache DOM elements for use in my render functions
 //// gameBoardEl, hiddenCardEl, showingCardEl, messagesEl, buttonEls
+
 
 //------ classes
 //// necessary classes for major bits of game data
@@ -15,6 +18,9 @@
 //// function hit => deals the player an additional card
 //// function stand => starts the dealer's turn
 //// function checkWinner => evaluates values of player and dealer's hands
+
+//------ event ;isteners
+///click handlers go here
 
 //------ Game
 //// Invoke the iniatialize() function, starting the game
