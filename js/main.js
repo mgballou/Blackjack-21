@@ -6,6 +6,7 @@ let dCards // will hold an array of the dealer's cards
 let pCards // will hold an array of the player's cards
 let money // stores the player's current winnings
 
+
 //------ DOM elements
 const dealerHandEl = document.querySelector('#dealer-hand') // display area to append card elements to
 const playerHandEl = document.querySelector('#player-hand') // "" for player's hand
@@ -24,21 +25,21 @@ class Deck {
     }
 
     makeDeck() {
-        // will iterate over a set of static properties (suit and rank) -> nested for loop > generate 52 card objects 
-        console.log(this.cards)
+        // refactored the nested for loops commented out beneath this into forEach loops
         Deck.suits.forEach(s => {
             Deck.ranks.forEach(r => {
                 let suit = Deck.suits[s]
                 let rank = Deck.ranks[r]
                 let newCard = new PlayingCard(suit, rank)
                 this.cards.push(newCard)
-
+                
             })
         })
+        // will iterate over a set of static properties (suit and rank) -> nested for loop > generate 52 card objects 
         // for (let s = 0; s < Deck.suits.length; s++) {
-        //     for (let r = 0; r < Deck.ranks.length; r++) {
-        //         let suit = Deck.suits[s]
-        //         let rank = Deck.ranks[r]
+            //     for (let r = 0; r < Deck.ranks.length; r++) {
+                //         let suit = Deck.suits[s]
+                //         let rank = Deck.ranks[r]
         //         let newCard = new PlayingCard(suit, rank)
         //         this.cards.push(newCard)
         //     }
@@ -56,10 +57,10 @@ class Deck {
 
 class PlayingCard {
     static rankLookup = {
-        "A": 14,
-        "K": 13,
-        "Q": 12,
-        "J": 11
+        "A": 11,
+        "K": 10,
+        "Q": 10,
+        "J": 10
     }
 
     constructor(suit, rank) {
@@ -81,8 +82,10 @@ class Dealer {
 function init() {
 
     console.log('Game start')
-    dCards = [1, 2, 3]
-    pCards = ['Ace', 7, 2]
+    dCards = []
+    pCards = []
+    money = 1000
+
     render()
 }
 
@@ -100,12 +103,13 @@ function renderHands() {
         nextCardEl.textContent = card // will need to refactor this to accept all the information that will actually be contained in each card in the array (suit, value)
         dealerHandEl.appendChild(nextCardEl)
     })
-
+    
+    /// this is identical to the above forEach, but for the player's cards
     pCards.forEach(card => {
-        // will need to add an if-statement here to check if an element already exists and to skip that index of the array if so on subsequent calls of render
+        // if statement needed, as above
         let newCardEl = document.createElement('div')
         newCardEl.classList.add('card')
-        newCardEl.textContent = card // will need to refactor this to accept all the information that will actually be contained in each card in the array (suit, value)
+        newCardEl.textContent = card // refactor needed, as above
         playerHandEl.appendChild(newCardEl)
     })
 
