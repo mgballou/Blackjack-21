@@ -1,6 +1,6 @@
 //------- app state
 //// Set the inital state of necessary variables, these things all will most likely need to be rendered to the screen
-//// deck, playerHand, dealerHand
+//// deck, pHand, dHand
 
 
 //------ DOM elements
@@ -20,7 +20,7 @@
 //// function checkWinner => evaluates values of player and dealer's hands
 
 //------ event ;isteners
-///click handlers go here
+////click handlers go here
 
 //------ Game
 //// Invoke the iniatialize() function, starting the game
