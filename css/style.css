@@ -4,28 +4,21 @@
 }
 
 main {
+    /* gameboard size should be a rectangle that takes up the majority of the window space */
     width: 90vmin;
     height: 80vmin;
     margin: auto;
+    /* creates a grid container for the gameboard */
     display: grid;
-    grid-template-areas:
-        "head head"
-        "dealer aside"
-        "player aside";
+   /* display has two columns and three rows */
     grid-template-columns: 4fr 1fr;
     grid-template-rows: 1fr 2fr 2fr;
 
 
 }
 
-/* main > div {
-    width: 60vmin;
-    height: 25vmin
-
-} */
-
 h1 {
-
+    
     grid-column: span 2;
     text-align: center;
 }
@@ -33,27 +26,57 @@ h1 {
 aside {
     grid-column: 2;
     grid-row: 2/4;
+    /* the aside needs to become a flex container so that I can include the messages to the player & buttons */
     display: flex;
     flex-direction: column;
     justify-content:space-around;
     border: 2px solid orange;
 }
 
-#messages {
-    height: 30vmin;
-    border: 2px dotted black;
+main > div {
+    display: flex;
+    align-items: center;
 
 }
+
+aside > div {
+    height: 30vmin;
+    border: 2px dotted black;
+    display: flex;
+    flex-direction: column;
+
+}
+
+p {
+    font-size: 1.5vmin;
+    margin: .25em 0;
+    border: 1px solid steelblue;
+    text-align: center;
+
+}
+
+.card {
+    border: 1px solid red;
+    height: 18vmin;
+    width: 12vmin;
+    margin: 0.5em;
+}
+
+/* #messages {
+    
+    
+} */
 
 #dealer-hand {
     grid-column: 1;
     grid-row: 2;
     border: 2px solid green;
-
+      
+    
 }
 
 #player-hand {
     grid-column: 1;
     grid-row: 3;
     border: 2px solid blue;
-}
+    }
