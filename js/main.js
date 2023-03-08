@@ -5,12 +5,14 @@ let deck // will hold the new instance of the deck class when init is run
 let dCards // will hold an array of the dealer's cards
 let pCards // will hold an array of the player's cards
 let money // stores the player's current winnings
+let active // truthyness of this variable will determine if render function clears existing cards & messages
 
 
 //------ DOM elements
 const dealerHandEl = document.querySelector('#dealer-hand') // display area to append card elements to
 const playerHandEl = document.querySelector('#player-hand') // "" for player's hand
 const messagesEl = document.querySelector('#messages') // location for messages to the player
+1
 
 //------ classes
 /// This section's code is built by modifying this example of deck and card class organization given in class https://replit.com/@JoshuaSmith62/OOP-Entity#script.js
@@ -95,6 +97,7 @@ function init() {
     console.log('Game start')
     dCards = []
     pCards = []
+    active = 1
     money = 1000
     deck = new Deck()
     deck.makeDeck()
@@ -105,6 +108,7 @@ function init() {
 function render() {
     console.log('Rendering game')
     renderHands()
+    renderMessages()
 
 }
 function renderHands() {
@@ -128,7 +132,12 @@ function renderHands() {
 
 }
 
+function renderMessages() {
+    let newMessage = document.createElement('p')
+    newMessage.textContent ='This works'
+    messagesEl.append(newMessage)
 
+}
 
 function hit() {
 
@@ -158,7 +167,7 @@ function checkHigherValue() {
 
 }
 
-//------ event ;isteners
+//------ event listeners
 
 
 //------ Game
