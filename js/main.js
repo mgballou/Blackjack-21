@@ -2,9 +2,7 @@
 // declare my game state variables that will be used to track changing data
 
 let deck // will hold the new instance of the deck class when init is run
-let dCards // will hold an array of the dealer's cards
-let pCards // will hold an array of the player's cards
-let money // stores the player's current winnings
+let game // will hold a new instance of the game class
 let active // truthyness of this variable will determine if render function clears existing cards & messages
 
 
@@ -58,7 +56,7 @@ class Deck {
             // stores the current position (last position on first iteration) in a placeholder varaible
             let temporaryValue = this.cards[i]
             // assigns the value at the random position to the current position in the array
-            this.cards[i] = this.cards[randomIndex] 
+            this.cards[i] = this.cards[randomIndex]
             // assigns the temporary value (previously held at the current position) to the random position
             this.cards[randomIndex] = temporaryValue
         }
@@ -86,7 +84,35 @@ class PlayingCard {
 ///////
 
 
-class Dealer {
+class Game {
+
+    constructor() {
+        this.messageLog = []
+        this.dealerCards = []
+        this.playerCards = []
+        this.money = 1000
+    }
+
+    deal() {
+        // deals the intiial four cards, one by one, to player and dealer
+        let i = 0
+
+        while (i < 4) {
+            let drawnCard = deck.cards.shift()
+            i % 2 === 0 ? game.playerCards.push(drawnCard) : game.dealerCards.push(drawnCard)
+            i++
+        }
+
+
+    }
+
+    hit() {
+
+    }
+
+    stand() {
+
+    }
 
 }
 
@@ -95,10 +121,8 @@ class Dealer {
 function init() {
 
     console.log('Game start')
-    dCards = []
-    pCards = []
     active = 1
-    money = 1000
+    game = new Game()
     deck = new Deck()
     deck.makeDeck()
     deck.shuffle()
@@ -113,37 +137,29 @@ function render() {
 }
 function renderHands() {
     //// iterates over dCards array, creating a new DOM element and appending it to the parent div
-    dCards.forEach(card => {
+    game.dealerCards.forEach(card => {
         // will need to add an if-statement here to check if an element already exists and to skip that index of the array if so on subsequent calls of render
         let nextCardEl = document.createElement('div')
         nextCardEl.classList.add('card')
-        nextCardEl.textContent = card // will need to refactor this to accept all the information that will actually be contained in each card in the array (suit, value)
+        nextCardEl.textContent = card.rank // will need to refactor this to accept all the information that will actually be contained in each card in the array (suit, value)
         dealerHandEl.appendChild(nextCardEl)
     })
 
     /// this is identical to the above forEach, but for the player's cards
-    pCards.forEach(card => {
+    game.playerCards.forEach(card => {
         // if statement needed, as above
         let newCardEl = document.createElement('div')
         newCardEl.classList.add('card')
-        newCardEl.textContent = card // refactor needed, as above
+        newCardEl.textContent = card.rank // refactor needed, as above
         playerHandEl.appendChild(newCardEl)
     })
 
 }
 
 function renderMessages() {
-    let newMessage = document.createElement('p')
-    newMessage.textContent ='This works'
-    messagesEl.append(newMessage)
-
-}
-
-function hit() {
-
-}
-
-function stand() {
+    let newMessageEl = document.createElement('p')
+    newMessageEl.textContent = 'This works'
+    messagesEl.append(newMessageEl)
 
 }
 
