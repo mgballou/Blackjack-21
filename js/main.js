@@ -30,8 +30,6 @@ class Deck {
             Deck.ranks.forEach(rank => {
                 let newCard = new PlayingCard(suit, rank)
                 this.cards.push(newCard, newCard) // this modification should now create a deck with 104 cards
-
-
             })
         })
         // will iterate over a set of static properties (suit and rank) -> nested for loop > generate 52 card objects 
@@ -53,9 +51,14 @@ class Deck {
 
         // starting at the last position of the array, iterates backwards
         for (let i = this.cards.length - 1; i > 0; i--) {
-            // generates a random number
+            // generates a random number to select a random position between the first and current positions
             let randomIndex = Math.floor(Math.random() * (i + 1))
+            // stores the current position (last position on first iteration) in a placeholder varaible
             let temporaryValue = this.cards[i]
+            // assigns the value at the random position to the current position in the array
+            this.cards[i] = this.cards[randomIndex] 
+            // assigns the temporary value (previously held at the current position) to the random position
+            this.cards[randomIndex] = temporaryValue
         }
 
     }
@@ -95,6 +98,7 @@ function init() {
     money = 1000
     deck = new Deck()
     deck.makeDeck()
+    deck.shuffle()
     render()
 }
 
