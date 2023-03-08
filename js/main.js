@@ -26,10 +26,8 @@ class Deck {
 
     makeDeck() {
         // refactored the nested for loops commented out beneath this into forEach loops
-        Deck.suits.forEach(s => {
-            Deck.ranks.forEach(r => {
-                let suit = Deck.suits[s]
-                let rank = Deck.ranks[r]
+        Deck.suits.forEach(suit => {
+            Deck.ranks.forEach(rank => {
                 let newCard = new PlayingCard(suit, rank)
                 this.cards.push(newCard, newCard) // this modification should now create a deck with 104 cards
 
@@ -56,8 +54,7 @@ class Deck {
         // starting at the last position of the array, iterates backwards
         for (let i = this.cards.length - 1; i > 0; i--) {
             // generates a random number
-            let randomIndex = Math.floor(Math.random() * (i+1))
-            console.log(randomIndex)
+            let randomIndex = Math.floor(Math.random() * (i + 1))
             let temporaryValue = this.cards[i]
         }
 
@@ -96,7 +93,8 @@ function init() {
     dCards = []
     pCards = []
     money = 1000
-
+    deck = new Deck()
+    deck.makeDeck()
     render()
 }
 
