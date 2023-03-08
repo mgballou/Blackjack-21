@@ -107,6 +107,8 @@ class Game {
     }
 
     hit() {
+        let drawnCard = deck.cards.shift()
+        game.playerCards.push(drawnCard)
 
     }
 
