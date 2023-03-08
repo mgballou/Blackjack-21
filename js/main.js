@@ -31,28 +31,39 @@ class Deck {
                 let suit = Deck.suits[s]
                 let rank = Deck.ranks[r]
                 let newCard = new PlayingCard(suit, rank)
-                this.cards.push(newCard)
-                
+                this.cards.push(newCard, newCard) // this modification should now create a deck with 104 cards
+
+
             })
         })
         // will iterate over a set of static properties (suit and rank) -> nested for loop > generate 52 card objects 
         // for (let s = 0; s < Deck.suits.length; s++) {
-            //     for (let r = 0; r < Deck.ranks.length; r++) {
-                //         let suit = Deck.suits[s]
-                //         let rank = Deck.ranks[r]
+        //     for (let r = 0; r < Deck.ranks.length; r++) {
+        //         let suit = Deck.suits[s]
+        //         let rank = Deck.ranks[r]
         //         let newCard = new PlayingCard(suit, rank)
         //         this.cards.push(newCard)
         //     }
         // }
     }
 
-    // shuffle(){
+    shuffle() {
+        /* implementing Fisher-Yates shuffle algorithm, referenced from
+        https://www.tutorialspoint.com/what-is-fisher-yates-shuffle-in-javascript
+        https://dev.to/codebubb/how-to-shuffle-an-array-in-javascript-2ikj
+         */
 
-    //}
+        // starting at the last position of the array, iterates backwards
+        for (let i = this.cards.length - 1; i > 0; i--) {
+            // generates a random number
+            let randomIndex = Math.floor(Math.random() * (i+1))
+            console.log(randomIndex)
+            let temporaryValue = this.cards[i]
+        }
 
-    // draw () {
+    }
 
-    // }
+
 }
 
 class PlayingCard {
@@ -103,7 +114,7 @@ function renderHands() {
         nextCardEl.textContent = card // will need to refactor this to accept all the information that will actually be contained in each card in the array (suit, value)
         dealerHandEl.appendChild(nextCardEl)
     })
-    
+
     /// this is identical to the above forEach, but for the player's cards
     pCards.forEach(card => {
         // if statement needed, as above
