@@ -10,7 +10,7 @@ let active // truthyness of this variable will determine if render function clea
 const dealerHandEl = document.querySelector('#dealer-hand') // display area to append card elements to
 const playerHandEl = document.querySelector('#player-hand') // "" for player's hand
 const messagesEl = document.querySelector('#messages') // location for messages to the player
-1
+const buttonContainerEl = document.querySelector('#buttons')
 
 //------ classes
 /// This section's code is built by modifying this example of deck and card class organization given in class https://replit.com/@JoshuaSmith62/OOP-Entity#script.js
@@ -175,17 +175,53 @@ function checkNatural21() {
 
 }
 
-
 function checkFiveCardCharlie() {
 
 }
-
 
 function checkHigherValue() {
 
 }
 
 //------ event listeners
+
+function handleClick(evt) {
+    if (evt.target.tagName !== 'BUTTON') {
+        return
+    }
+    switch (evt.target.id) {
+        case 'hit':
+            game.hit()
+            render()
+            break;
+        case 'stand':
+            game.stand()
+            render()
+            break;
+        case '100':
+
+            break;
+        case '250':
+            
+            break;
+        case '500':
+            
+            break;
+        case 'all-in':
+            
+            break;
+        case 'start':
+            game.deal()
+            render()
+            break;
+    }
+
+
+}
+
+buttonContainerEl.addEventListener('click', handleClick)
+
+
 
 
 //------ Game
