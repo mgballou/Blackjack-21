@@ -64,6 +64,7 @@ p {
     border: 2px dotted black;
     display: flex;
     flex-direction: column;
+    overflow: scroll;
     
 } 
 

@@ -123,7 +123,7 @@ class Game {
 function init() {
 
     console.log('Game start')
-    active = 1
+    active = 0
     game = new Game()
     deck = new Deck()
     deck.makeDeck()
@@ -136,26 +136,39 @@ function render() {
     renderHands()
     renderMessages()
 
+
 }
 function renderHands() {
-    //// iterates over dCards array, creating a new DOM element and appending it to the parent div
-    game.dealerCards.forEach(card => {
-        // will need to add an if-statement here to check if an element already exists and to skip that index of the array if so on subsequent calls of render
+    if (game.playerCards.length > 2) {
         let nextCardEl = document.createElement('div')
         nextCardEl.classList.add('card')
-        nextCardEl.textContent = card.rank // will need to refactor this to accept all the information that will actually be contained in each card in the array (suit, value)
+        nextCardEl.textContent = game.playerCards[game.playerCards.length - 1].rank // will need to refactor this to accept all the information that will actually be contained in each card in the array (suit, value)
+        playerHandEl.appendChild(nextCardEl)
+    }
+    if (game.dealerCards.length > 2) {
+        let nextCardEl = document.createElement('div')
+        nextCardEl.classList.add('card')
+        nextCardEl.textContent = game.dealerCards[game.dealerCards.length - 1].rank // will need to refactor this to accept all the information that will actually be contained in each card in the array (suit, value)
         dealerHandEl.appendChild(nextCardEl)
-    })
+    }
+    if (game.playerCards.length <= 2) {
+        //// iterates over dCards array, creating a new DOM element and appending it to the parent div
+        game.dealerCards.forEach(card => {
+            let nextCardEl = document.createElement('div')
+            nextCardEl.classList.add('card')
+            nextCardEl.textContent = card.rank // will need to refactor this to accept all the information that will actually be contained in each card in the array (suit, value)
+            dealerHandEl.appendChild(nextCardEl)
+        })
+        /// this is identical to the above forEach, but for the player's cards
+        game.playerCards.forEach(card => {
+            // if statement needed, as above
+            let newCardEl = document.createElement('div')
+            newCardEl.classList.add('card')
+            newCardEl.textContent = card.rank // refactor needed, as above
+            playerHandEl.appendChild(newCardEl)
+        })
 
-    /// this is identical to the above forEach, but for the player's cards
-    game.playerCards.forEach(card => {
-        // if statement needed, as above
-        let newCardEl = document.createElement('div')
-        newCardEl.classList.add('card')
-        newCardEl.textContent = card.rank // refactor needed, as above
-        playerHandEl.appendChild(newCardEl)
-    })
-
+    }
 }
 
 function renderMessages() {
@@ -202,13 +215,13 @@ function handleClick(evt) {
 
             break;
         case '250':
-            
+
             break;
         case '500':
-            
+
             break;
         case 'all-in':
-            
+
             break;
         case 'start':
             game.deal()
