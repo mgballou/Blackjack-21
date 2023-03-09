@@ -4,6 +4,7 @@
 let deck // will hold the new instance of the deck class when init is run
 let game // will hold a new instance of the game class
 let nextMessage // holds a string of the next message to be added to the game's messages window
+let wonHand // stores who won the current hand
 
 
 //------ DOM elements
@@ -105,18 +106,20 @@ class Game {
             i % 2 === 0 ? game.playerCards.push(drawnCard) : game.dealerCards.push(drawnCard)
             i++
         }
-        this.tallyValues()
         render.cards.atNewHand()
+        this.tallyValues()
+        checkNatural21()
     }
 
 
     hit() {
         let drawnCard = deck.cards.shift()
         game.playerCards.push(drawnCard)
+        render.cards.atHit()
         this.tallyValues()
         checkNatural21()
+        checkBust()
         checkFiveCardCharlie()
-        render.cards.atHit()
 
 
     }
@@ -135,8 +138,9 @@ class Game {
                 this.dealerHit()
                 this.tallyValues()
             }
-            checkNatural21()
-            checkFiveCardCharlie()
+            checkDealer21()
+            checkBust()
+            checkHigherValue()
         } else {
             return
         }
@@ -150,8 +154,20 @@ class Game {
 
     }
 
-    returnBet() {
-        game.money += this.currentBet * 2
+    completeHand(number, string) {
+        this.returnBet(number)
+        render.messages.atWinOrLoss(string)
+            if (game.money <= 0) {
+                render.messages.atGameOver()
+            } else {
+                render.messages.atEndofHand()
+            }
+        
+
+    }
+
+    returnBet(number) {
+        game.money += this.currentBet * number
     }
 
     tallyValues() {
@@ -269,18 +285,38 @@ const render = {
     messages: {
 
         atGameStart: function () {
+            let newMessageEl = document.createElement('p')
+            newMessageEl.textContent = "Select a bet to start playing"
+            messagesEl.append(newMessageEl)
 
         },
 
         atNewHand: function () {
+            let newMessageEl = document.createElement('p')
+            newMessageEl.textContent = "New deal"
+            messagesEl.append(newMessageEl)
 
         },
 
-        atHit: function () {
+        atWinOrLoss: function (string) {
+            let newMessageEl = document.createElement('p')
+            newMessageEl.textContent = nextMessage
+            messagesEl.append(newMessageEl)
 
         },
 
-        atStand: function () {
+        
+        atEndofHand: function () {
+            let newMessageEl = document.createElement('p')
+            newMessageEl.textContent = "Select a bet to play next hand"
+            messagesEl.append(newMessageEl)
+
+        },
+
+        atGameOver: function () {
+            let newMessageEl = document.createElement('p')
+            newMessageEl.textContent = "You ran out of money, game over! Reset Game to play again"
+            messagesEl.append(newMessageEl)
 
         }
 
@@ -354,35 +390,64 @@ function init() {
 
 // }
 
-function checkWinner() {
-    checkNatural21()
-    checkFiveCardCharlie()
-    checkHigherValue()
-}
+// function checkWinner() {
+//     checkNatural21()
+//     checkBust()
+//     checkFiveCardCharlie()
+//     checkHigherValue()
+// }
 
 function checkNatural21() {
+    if (game.playerValue === 21) {
+        nextMessage = `21! You won $${game.currentBet * 2}!`
+        wonHand = 2
+        game.completeHand(wonHand, nextMessage)
+    }
+}
+
+function checkDealer21() {
+    if (game.dealerValue === 21) {
+        nextMessage = `Dealer hits 21! You lost $${game.currentBet}!`
+        wonHand = 0
+        game.completeHand(wonHand, nextMessage)
+    }
+}
+
+function checkBust() {
+    if (game.playerValue > 21) {
+        nextMEssage = `Bust! You lost $${game.currentBet}`
+        wonHand = 0
+        game.completeHand(wonHand, nextMessage)
+    }
+    if (game.dealerValue > 21) {
+        nextMessage = `Dealer busts! You won $${game.currentBet * 2}!`
+        wonHand = 2
+        game.completeHand(wonHand, nextMessage)
+    }
 
 }
 
 function checkFiveCardCharlie() {
-    if (game.playerCards.length === 5) {
-        game.money += (currentBet * 2)
-        nextMessage = `Five Card Charlie! You won $${currentBet * 2}`
+    if (game.playerValue < 21 && game.playerCards.length === 5) {
+        nextMessage = `Five Card Charlie! You won $${game.currentBet * 2}`
+        wonHand = 2
+        game.completeHand(wonHand, nextMessage)
     }
 
 }
 
 function checkHigherValue() {
     if (game.playerValue > game.dealerValue) {
-        game.returnBet()
-        nextMessage = `You have ${game.playerValue}, dealer has ${game.dealerValue}. You won $${currentBet * 2}!`
+        nextMessage = `You have ${game.playerValue}, dealer has ${game.dealerValue}. You won $${game.currentBet * 2}!`
+        wonHand = 2
     } else if (game.playerValue < game.dealerValue) {
-        nextMessage = `You have ${game.playerValue}, dealer has ${game.dealerValue}. You lost $${currentBet}`
+        nextMessage = `You have ${game.playerValue}, dealer has ${game.dealerValue}. You lost $${game.currentBet}`
+        wonHand = 0
     } else {
-        game.money += currentBet
-        nextMessage = `Tie hand, dealer gives you back $${currentBet}`
+        nextMessage = `Tie hand, dealer gives you back $${game.currentBet}`
+        wonHand = 1
     }
-
+    game.completeHand(wonHand, nextMessage)
 }
 
 //------ event listeners
@@ -394,7 +459,6 @@ function handleClick(evt) {
         case 'hit':
             game.hit()
             break;
-
         case 'stand':
             game.stand()
             break;
