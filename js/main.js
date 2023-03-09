@@ -89,22 +89,23 @@ class Game {
     constructor() {
         this.messageLog = []
         this.dealerCards = []
+        this.dealerValue = 0
         this.playerCards = []
+        this.playerValue = 0
         this.money = 1000
     }
 
     deal() {
         // deals the intiial four cards, one by one, to player and dealer
         let i = 0
-
         while (i < 4) {
             let drawnCard = deck.cards.shift()
             i % 2 === 0 ? game.playerCards.push(drawnCard) : game.dealerCards.push(drawnCard)
             i++
         }
-
-
+        this.tallyValues()
     }
+
 
     hit() {
         let drawnCard = deck.cards.shift()
@@ -113,7 +114,55 @@ class Game {
     }
 
     stand() {
+        if (this.dealerValue <= 16) {
+            let drawnCard = deck.cards.shift()
+            game.dealerCards.push(drawnCard)
+        }
 
+
+    }
+
+    tallyValues() {
+        // tallies current value of dealer's cards and player's cards
+        this.dealerCards.forEach(card => {
+            switch (card.rank) {
+                case 'A':
+                    this.dealerValue += 11
+                    break;
+                case 'J':
+                    this.dealerValue += 10
+                    break;
+                case 'Q':
+                    this.dealerValue += 10
+                    break;
+                case 'K':
+                    this.dealerValue += 10
+                    break;
+                default:
+                    this.dealerValue += Number(card.rank)
+
+            }
+        })
+
+        this.playerCards.forEach(card => {
+            switch (card.rank) {
+                case 'A':
+                    this.playerValue += 11
+                    break;
+                case 'J':
+                    this.playerValue += 10
+                    break;
+                case 'Q':
+                    this.playerValue += 10
+                    break;
+                case 'K':
+                    this.playerValue += 10
+                    break;
+                default:
+                    this.playerValue += Number(card.rank)
+
+            }
+        })
     }
 
 }
