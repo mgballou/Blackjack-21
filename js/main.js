@@ -106,7 +106,7 @@ class Game {
             i++
         }
         this.tallyValues()
-        render()
+        // render()
     }
 
 
@@ -185,12 +185,19 @@ class Game {
         this.playerCards = []
         this.dealerCards = []
         this.tallyValues()
-        render()
+        // render()
 
     }
 
 }
 
+//------- Object
+// I'm adding an Object literal rather than a class here
+// Looking to solve my issues in rendering by having different functions completely for different phases of the game, and storing the necessary information in the object rather than loosely
+
+const render = {
+
+}
 
 //------ functions
 function init() {
@@ -201,55 +208,55 @@ function init() {
     deck = new Deck()
     deck.makeDeck()
     deck.shuffle()
-    render()
+    // render()
 }
 
-function render() {
-    console.log('Rendering game')
-    renderHands()
-    renderMessages()
+// function render() {
+//     console.log('Rendering game')
+//     renderHands()
+//     renderMessages()
 
 
-}
-function renderHands() {
-    if (playerHandEl.childNodes.length < 2) {
-        //// iterates over dCards array, creating a new DOM element and appending it to the parent div
-        game.dealerCards.forEach(card => {
-            let nextCardEl = document.createElement('div')
-            nextCardEl.classList.add('card')
-            nextCardEl.textContent = card.rank // will need to refactor this to accept all the information that will actually be contained in each card in the array (suit, value)
-            dealerHandEl.appendChild(nextCardEl)
-        })
-        /// this is identical to the above forEach, but for the player's cards
-        game.playerCards.forEach(card => {
-            // if statement needed, as above
-            let newCardEl = document.createElement('div')
-            newCardEl.classList.add('card')
-            newCardEl.textContent = card.rank // refactor needed, as above
-            playerHandEl.appendChild(newCardEl)
-        })
-    }
-    if (game.playerCards.length > 2) {
-        let nextCardEl = document.createElement('div')
-        nextCardEl.classList.add('card')
-        nextCardEl.textContent = game.playerCards[game.playerCards.length - 1].rank // will need to refactor this to accept all the information that will actually be contained in each card in the array (suit, value)
-        playerHandEl.appendChild(nextCardEl)
-    }
-    if (game.dealerCards.length > 2) {
-        let nextCardEl = document.createElement('div')
-        nextCardEl.classList.add('card')
-        nextCardEl.textContent = game.dealerCards[game.dealerCards.length - 1].rank // will need to refactor this to accept all the information that will actually be contained in each card in the array (suit, value)
-        dealerHandEl.appendChild(nextCardEl)
-    }
-}
+// }
+// function renderHands() {
+//     if (playerHandEl.childNodes.length < 2) {
+//         //// iterates over dCards array, creating a new DOM element and appending it to the parent div
+//         game.dealerCards.forEach(card => {
+//             let nextCardEl = document.createElement('div')
+//             nextCardEl.classList.add('card')
+//             nextCardEl.textContent = card.rank // will need to refactor this to accept all the information that will actually be contained in each card in the array (suit, value)
+//             dealerHandEl.appendChild(nextCardEl)
+//         })
+//         /// this is identical to the above forEach, but for the player's cards
+//         game.playerCards.forEach(card => {
+//             // if statement needed, as above
+//             let newCardEl = document.createElement('div')
+//             newCardEl.classList.add('card')
+//             newCardEl.textContent = card.rank // refactor needed, as above
+//             playerHandEl.appendChild(newCardEl)
+//         })
+//     }
+//     if (game.playerCards.length > 2) {
+//         let nextCardEl = document.createElement('div')
+//         nextCardEl.classList.add('card')
+//         nextCardEl.textContent = game.playerCards[game.playerCards.length - 1].rank // will need to refactor this to accept all the information that will actually be contained in each card in the array (suit, value)
+//         playerHandEl.appendChild(nextCardEl)
+//     }
+//     if (game.dealerCards.length > 2) {
+//         let nextCardEl = document.createElement('div')
+//         nextCardEl.classList.add('card')
+//         nextCardEl.textContent = game.dealerCards[game.dealerCards.length - 1].rank // will need to refactor this to accept all the information that will actually be contained in each card in the array (suit, value)
+//         dealerHandEl.appendChild(nextCardEl)
+//     }
+// }
 
-function renderMessages() {
-    let newMessageEl = document.createElement('p')
-    newMessageEl.textContent = nextMessage
-    messagesEl.append(newMessageEl)
-    nextMessage = ''
+// function renderMessages() {
+//     let newMessageEl = document.createElement('p')
+//     newMessageEl.textContent = nextMessage
+//     messagesEl.append(newMessageEl)
+//     nextMessage = ''
 
-}
+// }
 
 function checkWinner() {
     checkNatural21()
