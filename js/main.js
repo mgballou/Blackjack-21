@@ -9,6 +9,7 @@ let nextMessage // holds a string of the next message to be added to the game's 
 
 
 //------ DOM elements
+
 const dealerHandEl = document.querySelector('#dealer-hand') // display area to append card elements to
 const playerHandEl = document.querySelector('#player-hand') // "" for player's hand
 const messagesEl = document.querySelector('#messages') // location for messages to the player
@@ -106,7 +107,7 @@ class Game {
             i++
         }
         this.tallyValues()
-        // render()
+        render.cards.atNewHand()
     }
 
 
@@ -116,22 +117,30 @@ class Game {
         this.tallyValues()
         checkNatural21()
         checkFiveCardCharlie()
+        render.cards.atHit()
 
 
     }
 
     dealerHit() {
-        // if (this.dealerValue <= 16) {
-        //     let drawnCard = deck.cards.shift()
-        //     game.dealerCards.push(drawnCard)
-        // }
+        let drawnCard = deck.cards.shift()
+        game.dealerCards.push(drawnCard)
+        render.cards.atDealerHit()
 
     }
 
     stand() {
-
-        // this.tallyValues()
-        // checkHigherValue()
+        
+        if (this.dealerCards) {
+            while (this.dealerValue <= 16) {
+                this.dealerHit()
+                this.tallyValues()
+            }
+            checkNatural21()
+            checkFiveCardCharlie()
+        } else {
+            return
+        }
 
 
     }
@@ -189,7 +198,7 @@ class Game {
         this.playerCards = []
         this.dealerCards = []
         this.tallyValues()
-        // render()
+        render.clearBoard()
 
     }
 
@@ -376,12 +385,12 @@ function handleClick(evt) {
     switch (evt.target.id) {
         case 'hit':
             game.hit()
-            // render()
             break;
+
         case 'stand':
             game.stand()
-            // render()
             break;
+
         case '100':
             game.clearBoard()
             game.deal()
