@@ -195,7 +195,7 @@ class Game {
 
 }
 
-//------- Object
+//------- Objects
 // I'm adding an Object literal rather than a class here
 // Looking to solve my issues in rendering by having different functions completely for different phases of the game, and storing the necessary information in the object rather than loosely
 
@@ -242,13 +242,17 @@ const render = {
 
         },
 
-        atStand: function () {
-            console.log('Rendering stand')
+        // atStand: function () {
+        //     console.log('Rendering stand')
 
-        }
+        // }
     },
 
     messages: {
+
+        atGameStart: function () {
+
+        },
 
         atNewHand: function () {
 
@@ -282,7 +286,7 @@ function init() {
     deck = new Deck()
     deck.makeDeck()
     deck.shuffle()
-    // render()
+    render.messages.atGameStart()
 }
 
 // function render() {
