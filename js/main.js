@@ -120,14 +120,18 @@ class Game {
 
     }
 
-    stand() {
-        if (this.dealerValue <= 16) {
-            let drawnCard = deck.cards.shift()
-            game.dealerCards.push(drawnCard)
-        }
-        this.tallyValues()
-        checkHigherValue()
+    dealerHit() {
+        // if (this.dealerValue <= 16) {
+        //     let drawnCard = deck.cards.shift()
+        //     game.dealerCards.push(drawnCard)
+        // }
 
+    }
+
+    stand() {
+
+        // this.tallyValues()
+        // checkHigherValue()
 
 
     }
@@ -196,6 +200,45 @@ class Game {
 // Looking to solve my issues in rendering by having different functions completely for different phases of the game, and storing the necessary information in the object rather than loosely
 
 const render = {
+    // atNewHand() wil lbe called only on the initial deal of each betting round
+
+    cards: {
+        atNewHand: function () {
+            console.log('Rendering game')
+        },
+
+        // atHit() will be called when the player selects hit, and will only render the most recent card in the player's array
+        atHit: function () {
+            console.log('Rendering hit')
+        },
+
+        // atStand() will be called when the player stands, and will render any additional cards that the dealer draws
+
+        atDealerHit: function () {
+
+        },
+
+        atStand: function () {
+            console.log('Rendering stand')
+
+        }
+    },
+
+    messages: {
+
+        atNewHand: function () { 
+
+        },
+
+        atHit: function () {
+
+        },
+
+        atStand: function () {
+            
+        } 
+
+    }
 
 }
 
