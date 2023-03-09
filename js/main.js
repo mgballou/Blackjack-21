@@ -4,6 +4,8 @@
 let deck // will hold the new instance of the deck class when init is run
 let game // will hold a new instance of the game class
 let active // truthyness of this variable will determine if render function clears existing cards & messages
+let currentBet // holds the player's current bet on each hand
+let nextMessage // holds a string of the next message to be added to the game's messages window
 
 
 //------ DOM elements
@@ -104,12 +106,17 @@ class Game {
             i++
         }
         this.tallyValues()
+        render()
     }
 
 
     hit() {
         let drawnCard = deck.cards.shift()
         game.playerCards.push(drawnCard)
+        this.tallyValues()
+        checkNatural21()
+        checkFiveCardCharlie()
+
 
     }
 
@@ -118,14 +125,21 @@ class Game {
             let drawnCard = deck.cards.shift()
             game.dealerCards.push(drawnCard)
         }
+        this.tallyValues()
+        checkHigherValue()
+
 
 
     }
 
     tallyValues() {
         // tallies current value of dealer's cards and player's cards
+        this.dealerValue = 0
+        this.playerValue = 0
         this.dealerCards.forEach(card => {
             switch (card.rank) {
+                case undefined:
+                    this.dealerValue += 0
                 case 'A':
                     this.dealerValue += 11
                     break;
@@ -146,6 +160,8 @@ class Game {
 
         this.playerCards.forEach(card => {
             switch (card.rank) {
+                case undefined:
+                    this.playerValue += 0
                 case 'A':
                     this.playerValue += 11
                     break;
@@ -163,6 +179,14 @@ class Game {
 
             }
         })
+    }
+
+    clearBoard() {
+        this.playerCards = []
+        this.dealerCards = []
+        this.tallyValues()
+        render()
+
     }
 
 }
@@ -188,19 +212,7 @@ function render() {
 
 }
 function renderHands() {
-    if (game.playerCards.length > 2) {
-        let nextCardEl = document.createElement('div')
-        nextCardEl.classList.add('card')
-        nextCardEl.textContent = game.playerCards[game.playerCards.length - 1].rank // will need to refactor this to accept all the information that will actually be contained in each card in the array (suit, value)
-        playerHandEl.appendChild(nextCardEl)
-    }
-    if (game.dealerCards.length > 2) {
-        let nextCardEl = document.createElement('div')
-        nextCardEl.classList.add('card')
-        nextCardEl.textContent = game.dealerCards[game.dealerCards.length - 1].rank // will need to refactor this to accept all the information that will actually be contained in each card in the array (suit, value)
-        dealerHandEl.appendChild(nextCardEl)
-    }
-    if (game.playerCards.length <= 2) {
+    if (playerHandEl.childNodes.length < 2) {
         //// iterates over dCards array, creating a new DOM element and appending it to the parent div
         game.dealerCards.forEach(card => {
             let nextCardEl = document.createElement('div')
@@ -216,14 +228,26 @@ function renderHands() {
             newCardEl.textContent = card.rank // refactor needed, as above
             playerHandEl.appendChild(newCardEl)
         })
-
+    }
+    if (game.playerCards.length > 2) {
+        let nextCardEl = document.createElement('div')
+        nextCardEl.classList.add('card')
+        nextCardEl.textContent = game.playerCards[game.playerCards.length - 1].rank // will need to refactor this to accept all the information that will actually be contained in each card in the array (suit, value)
+        playerHandEl.appendChild(nextCardEl)
+    }
+    if (game.dealerCards.length > 2) {
+        let nextCardEl = document.createElement('div')
+        nextCardEl.classList.add('card')
+        nextCardEl.textContent = game.dealerCards[game.dealerCards.length - 1].rank // will need to refactor this to accept all the information that will actually be contained in each card in the array (suit, value)
+        dealerHandEl.appendChild(nextCardEl)
     }
 }
 
 function renderMessages() {
     let newMessageEl = document.createElement('p')
-    newMessageEl.textContent = 'This works'
+    newMessageEl.textContent = nextMessage
     messagesEl.append(newMessageEl)
+    nextMessage = ''
 
 }
 
@@ -238,10 +262,23 @@ function checkNatural21() {
 }
 
 function checkFiveCardCharlie() {
+    if (game.playerCards.length === 5) {
+        game.money += (currentBet * 2)
+        nextMessage = `Five Card Charlie! You won $${currentBet * 2}`
+    }
 
 }
 
 function checkHigherValue() {
+    if (game.playerValue > game.dealerValue) {
+        game.money += (currentBet * 2)
+        nextMessage = `You have ${game.playerValue}, dealer has ${game.dealerValue}. You won $${currentBet * 2}!`
+    } else if (game.playerValue < game.dealerValue) {
+        nextMessage = `You have ${game.playerValue}, dealer has ${game.dealerValue}. You lost $${currentBet}`
+    } else {
+        game.money += currentBet
+        nextMessage = `Tie hand, dealer gives you back $${currentBet}`
+    }
 
 }
 
@@ -261,20 +298,35 @@ function handleClick(evt) {
             render()
             break;
         case '100':
+            game.clearBoard()
+            game.deal()
+            currentBet = Number(evt.target.id)
+            game.money -= currentBet
 
             break;
         case '250':
+            game.clearBoard()
+            game.deal()
+            currentBet = Number(evt.target.id)
+            game.money -= currentBet
 
             break;
         case '500':
+            game.clearBoard()
+            game.deal()
+            currentBet = Number(evt.target.id)
+            game.money -= currentBet
 
             break;
         case 'all-in':
+            game.clearBoard()
+            game.deal()
+            currentBet = game.money
+            game.money -= currentBet
 
             break;
-        case 'start':
-            game.deal()
-            render()
+        case 'reset':
+            init()
             break;
     }
 
