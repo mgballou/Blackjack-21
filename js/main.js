@@ -3,8 +3,6 @@
 
 let deck // will hold the new instance of the deck class when init is run
 let game // will hold a new instance of the game class
-let active // truthyness of this variable will determine if render function clears existing cards & messages
-let currentBet // holds the player's current bet on each hand
 let nextMessage // holds a string of the next message to be added to the game's messages window
 
 
@@ -96,6 +94,7 @@ class Game {
         this.playerCards = []
         this.playerValue = 0
         this.money = 1000
+        this.currentBet = 0
     }
 
     deal() {
@@ -130,7 +129,7 @@ class Game {
     }
 
     stand() {
-        
+
         if (this.dealerCards) {
             while (this.dealerValue <= 16) {
                 this.dealerHit()
@@ -143,6 +142,16 @@ class Game {
         }
 
 
+    }
+
+    takeBet(number) {
+        this.currentBet = number
+        game.money -= this.currentBet
+
+    }
+
+    returnBet() {
+        game.money += this.currentBet * 2
     }
 
     tallyValues() {
@@ -365,7 +374,7 @@ function checkFiveCardCharlie() {
 
 function checkHigherValue() {
     if (game.playerValue > game.dealerValue) {
-        game.money += (currentBet * 2)
+        game.returnBet()
         nextMessage = `You have ${game.playerValue}, dealer has ${game.dealerValue}. You won $${currentBet * 2}!`
     } else if (game.playerValue < game.dealerValue) {
         nextMessage = `You have ${game.playerValue}, dealer has ${game.dealerValue}. You lost $${currentBet}`
@@ -379,10 +388,9 @@ function checkHigherValue() {
 //------ event listeners
 
 function handleClick(evt) {
-    if (evt.target.tagName !== 'BUTTON') {
-        return
-    }
     switch (evt.target.id) {
+        case 'buttons':
+            break;
         case 'hit':
             game.hit()
             break;
@@ -390,38 +398,20 @@ function handleClick(evt) {
         case 'stand':
             game.stand()
             break;
-
-        case '100':
-            game.clearBoard()
-            game.deal()
-            currentBet = Number(evt.target.id)
-            game.money -= currentBet
-
-            break;
-        case '250':
-            game.clearBoard()
-            game.deal()
-            currentBet = Number(evt.target.id)
-            game.money -= currentBet
-
-            break;
-        case '500':
-            game.clearBoard()
-            game.deal()
-            currentBet = Number(evt.target.id)
-            game.money -= currentBet
-
-            break;
         case 'all-in':
             game.clearBoard()
+            game.takeBet(game.money)
             game.deal()
-            currentBet = game.money
-            game.money -= currentBet
-
             break;
         case 'reset':
             init()
             break;
+        default:
+            game.clearBoard()
+            game.takeBet(evt.target.id)
+            game.deal()
+            break;
+
     }
 
 
