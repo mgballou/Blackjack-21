@@ -204,17 +204,41 @@ const render = {
 
     cards: {
         atNewHand: function () {
-            console.log('Rendering game')
+            console.log('Rendering new hand deal')
+            //// iterates over dCards array, creating a new DOM element and appending it to the parent div
+            game.dealerCards.forEach(card => {
+                let nextCardEl = document.createElement('div')
+                nextCardEl.classList.add('card')
+                nextCardEl.textContent = card.rank // will need to refactor this to accept all the information that will actually be contained in each card in the array (suit, value)
+                dealerHandEl.appendChild(nextCardEl)
+            })
+            /// this is identical to the above forEach, but for the player's cards
+            game.playerCards.forEach(card => {
+                // if statement needed, as above
+                let newCardEl = document.createElement('div')
+                newCardEl.classList.add('card')
+                newCardEl.textContent = card.rank // refactor needed, as above
+                playerHandEl.appendChild(newCardEl)
+            })
+
         },
 
         // atHit() will be called when the player selects hit, and will only render the most recent card in the player's array
         atHit: function () {
             console.log('Rendering hit')
+            let nextCardEl = document.createElement('div')
+            nextCardEl.classList.add('card')
+            nextCardEl.textContent = game.playerCards[game.playerCards.length - 1].rank // will need to refactor this to accept all the information that will actually be contained in each card in the array (suit, value)
+            playerHandEl.appendChild(nextCardEl)
         },
 
         // atStand() will be called when the player stands, and will render any additional cards that the dealer draws
 
         atDealerHit: function () {
+            let nextCardEl = document.createElement('div')
+            nextCardEl.classList.add('card')
+            nextCardEl.textContent = game.dealerCards[game.dealerCards.length - 1].rank // will need to refactor this to accept all the information that will actually be contained in each card in the array (suit, value)
+            dealerHandEl.appendChild(nextCardEl)
 
         },
 
@@ -226,7 +250,7 @@ const render = {
 
     messages: {
 
-        atNewHand: function () { 
+        atNewHand: function () {
 
         },
 
@@ -235,9 +259,16 @@ const render = {
         },
 
         atStand: function () {
-            
-        } 
 
+        }
+
+    },
+
+    clearBoard: function () {
+        let allCardEls = document.querySelectorAll('.card')
+        allCardEls.forEach(cardEl => {
+            cardEl.remove()
+        })
     }
 
 }
@@ -341,11 +372,11 @@ function handleClick(evt) {
     switch (evt.target.id) {
         case 'hit':
             game.hit()
-            render()
+            // render()
             break;
         case 'stand':
             game.stand()
-            render()
+            // render()
             break;
         case '100':
             game.clearBoard()
