@@ -157,12 +157,12 @@ class Game {
     completeHand(number, string) {
         this.returnBet(number)
         render.messages.atWinOrLoss(string)
-            if (game.money <= 0) {
-                render.messages.atGameOver()
-            } else {
-                render.messages.atEndofHand()
-            }
-        
+        if (game.money <= 0) {
+            render.messages.atGameOver()
+        } else {
+            render.messages.atEndofHand()
+        }
+
 
     }
 
@@ -305,7 +305,7 @@ const render = {
 
         },
 
-        
+
         atEndofHand: function () {
             let newMessageEl = document.createElement('p')
             newMessageEl.textContent = "Select a bet to play next hand"
@@ -415,7 +415,7 @@ function checkDealer21() {
 
 function checkBust() {
     if (game.playerValue > 21) {
-        nextMEssage = `Bust! You lost $${game.currentBet}`
+        nextMessage = `Bust! You lost $${game.currentBet}`
         wonHand = 0
         game.completeHand(wonHand, nextMessage)
     }
@@ -437,17 +437,21 @@ function checkFiveCardCharlie() {
 }
 
 function checkHigherValue() {
-    if (game.playerValue > game.dealerValue) {
-        nextMessage = `You have ${game.playerValue}, dealer has ${game.dealerValue}. You won $${game.currentBet * 2}!`
-        wonHand = 2
-    } else if (game.playerValue < game.dealerValue) {
-        nextMessage = `You have ${game.playerValue}, dealer has ${game.dealerValue}. You lost $${game.currentBet}`
-        wonHand = 0
+    if (game.dealerValue >= 21) {
+        return
     } else {
-        nextMessage = `Tie hand, dealer gives you back $${game.currentBet}`
-        wonHand = 1
+        if (game.playerValue > game.dealerValue) {
+            nextMessage = `You have ${game.playerValue}, dealer has ${game.dealerValue}. You won $${game.currentBet * 2}!`
+            wonHand = 2
+        } else if (game.playerValue < game.dealerValue) {
+            nextMessage = `You have ${game.playerValue}, dealer has ${game.dealerValue}. You lost $${game.currentBet}`
+            wonHand = 0
+        } else {
+            nextMessage = `Tie hand, dealer gives you back $${game.currentBet}`
+            wonHand = 1
+        }
+        game.completeHand(wonHand, nextMessage)
     }
-    game.completeHand(wonHand, nextMessage)
 }
 
 //------ event listeners
@@ -468,6 +472,7 @@ function handleClick(evt) {
             game.deal()
             break;
         case 'reset':
+            game.clearBoard()
             init()
             break;
         default:

@@ -3,10 +3,13 @@
     /* border: 1px solid red; */
 }
 
+
 main {
     /* gameboard size should be a rectangle that takes up the majority of the window space */
     width: 90vmin;
-    height: 80vmin;
+    height: 80vmin; 
+    /* width: 75%;
+    height: 40%; */
     margin: auto;
     /* creates a grid container for the gameboard */
     display: grid;
@@ -18,7 +21,7 @@ main {
 }
 
 h1 {
-    
+    margin: 0.5em;
     grid-column: span 2;
     text-align: center;
 }
@@ -45,7 +48,7 @@ main > div {
 } */
 
 p {
-    font-size: 1.5vmin;
+    /* font-size: 1.5vmin; */
     margin: .25em 0;
     border: 1px solid steelblue;
     text-align: center;
@@ -57,11 +60,14 @@ p {
     border: 1px solid red;
     height: 18vmin;
     width: 12vmin;
+    /* height: 18vmax;
+    width: 12vmax; */
     margin: 0.5em;
 }
 
 #messages {
     height: 40vmin;
+    /* height: 40vmax; */
     border: 2px dotted black;
     display: flex;
     flex-direction: column;
@@ -71,11 +77,12 @@ p {
 
 #buttons {
     height: 25vmin;
+    /* height: 25vmax; */
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr 1fr;
     border: 1px solid purple;
-    grid-gap: 2em;
+    grid-gap: 1.5em;
     margin: .5em;
 }
 
