@@ -5,6 +5,7 @@ let deck // will hold the new instance of the deck class when init is run
 let game // will hold a new instance of the game class
 let nextMessage // holds a string of the next message to be added to the game's messages window
 let wonHand // stores who won the current hand
+let toggle // will handle state of active and inactive buttons
 
 
 //------ DOM elements
@@ -154,15 +155,18 @@ class Game {
     takeBet(number) {
         this.currentBet = number
         game.money -= this.currentBet
+        
         render.money()
 
     }
 
     completeHand(number, string) {
         this.returnBet(number)
+        this.buttonSwitch()
         render.messages.atWinOrLoss(string)
         if (game.money <= 0) {
             render.messages.atGameOver()
+            this.buttonSwitch()
         } else {
             render.messages.atEndofHand()
         }
@@ -228,9 +232,15 @@ class Game {
     clearBoard() {
         this.playerCards = []
         this.dealerCards = []
+        this.buttonSwitch()
         this.tallyValues()
         render.clearBoard()
 
+    }
+
+    buttonSwitch () {
+        render.buttons()
+        toggle *= -1
     }
 
 }
@@ -343,6 +353,24 @@ const render = {
     money: function () {
         moneyEl.textContent = `$${game.money}`
 
+    },
+
+    buttons: function () {
+        if (toggle > 0) {
+            document.querySelectorAll(".bets").forEach(button => {
+                button.disabled = true
+            })
+            document.querySelectorAll('.other-button').forEach(button => {
+                button.disabled = false
+            })
+        } else {
+            document.querySelectorAll(".bets").forEach(button => {
+                button.disabled = false
+            })
+            document.querySelectorAll('.other-button').forEach(button => {
+                button.disabled = true
+            })
+        }
     }
 
 }
@@ -351,12 +379,14 @@ const render = {
 function init() {
 
     console.log('Game start')
-    active = 0
+    toggle = 1
     game = new Game()
     deck = new Deck()
     deck.makeDeck()
     deck.shuffle()
     render.messages.atGameStart()
+    render.money()
+    render.values()
 }
 
 // function render() {
@@ -482,14 +512,14 @@ function handleClick(evt) {
         case 'stand':
             game.stand()
             break;
+        case 'reset':
+            game.clearBoard()
+            init()
+            break;
         case 'all-in':
             game.clearBoard()
             game.takeBet(game.money)
             game.deal()
-            break;
-        case 'reset':
-            game.clearBoard()
-            init()
             break;
         default:
             game.clearBoard()
