@@ -1,0 +1,17 @@
+:root {
+    --clr-main-bg: #120052;
+    --clr-neon1: #3cb9fC;
+    --clr-neon2: #b537f2;
+    --clr-neon3: #8a2be2;
+    --clr-neon4: #fec763;
+
+}
+
+body {
+    background: var(--clr-main-bg);
+    color: var(--clr-neon1);
+}
+
+button {
+    
+}
