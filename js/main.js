@@ -12,7 +12,10 @@ let wonHand // stores who won the current hand
 const dealerHandEl = document.querySelector('#dealer-hand') // display area to append card elements to
 const playerHandEl = document.querySelector('#player-hand') // "" for player's hand
 const messagesEl = document.querySelector('#messages') // location for messages to the player
-const buttonContainerEl = document.querySelector('#buttons')
+const buttonContainerEl = document.querySelector('#buttons') // all buttons located here
+const dealerValueEl = document.querySelector('#dealer-value')
+const playerValueEl = document.querySelector('#player-value')
+const moneyEl = document.querySelector('#money')
 
 //------ classes
 /// This section's code is built by modifying this example of deck and card class organization given in class https://replit.com/@JoshuaSmith62/OOP-Entity#script.js
@@ -151,6 +154,7 @@ class Game {
     takeBet(number) {
         this.currentBet = number
         game.money -= this.currentBet
+        render.money()
 
     }
 
@@ -168,6 +172,7 @@ class Game {
 
     returnBet(number) {
         game.money += this.currentBet * number
+        render.money()
     }
 
     tallyValues() {
@@ -217,6 +222,7 @@ class Game {
 
             }
         })
+        render.values()
     }
 
     clearBoard() {
@@ -327,6 +333,16 @@ const render = {
         allCardEls.forEach(cardEl => {
             cardEl.remove()
         })
+    },
+
+    values: function () {
+        dealerValueEl.textContent = game.dealerValue
+        playerValueEl.textContent = game.playerValue
+    },
+
+    money: function () {
+        moneyEl.textContent = `$${game.money}`
+
     }
 
 }
