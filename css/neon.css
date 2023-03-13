@@ -2,79 +2,113 @@
 
 
 :root {
-    --clr-main-bg: #120052;
+    --clr-main-bg: black;
     --clr-neon1: #3cb9fC;
     --clr-neon2: #bc75f9;
     --clr-neon3: #8a2be2;
     --clr-neon4: #fec763;
+    --clr-neon-yellow: #ffff33;
+    --clr-neon-red: #fd1c03;
+    --clr-neon-blue: #0062ff;
+    --clr-neon-green: #00ff33;
+    --clr-neon-pink: #f0c;
+    --clr-neon-purple: #9d00ff;
 
 }
 
 body {
     background: var(--clr-main-bg);
-    color: var(--clr-neon4);
-    
+    color: var(--clr-neon-yellow);
+
 }
 
 main {
-    border: 2px var(--clr-neon3) solid;
+    border: 2px var(--clr-neon-purple) solid;
     border-radius: .25em;
-    text-shadow: 
+    text-shadow:
         0 0 .1em hsl(0 0% 100% / .25),
         0 0 .3em currentColor;
 
-    box-shadow: inset 0 0 0.75em 0 var(--clr-neon3), 0 0 0.75em 0 var(--clr-neon3);
+    box-shadow: inset 0 0 0.75em 0 var(--clr-neon-purple), 0 0 0.75em 0 var(--clr-neon-purple);
 }
 
-aside, #dealer-hand, #player-hand{
-    border: 2px var(--clr-neon3) solid;
+aside,
+#dealer-hand,
+#player-hand {
+    border: 2px var(--clr-neon-purple) solid;
     border-radius: .25em;
-    box-shadow: inset 0 0 0.75em 0 var(--clr-neon3), 0 0 0.75em 0 var(--clr-neon3)
-
+    box-shadow: inset 0 0 0.75em 0 var(--clr-neon-purple), 0 0 0.75em 0 var(--clr-neon-purple)
 }
 
-#dealer-value, #player-value, #money {
-    border: slategray 2px solid;
-    color: slategray;
+#dealer-value,
+#player-value {
+    border: var(--clr-neon-yellow) 2px solid;
+    color: var(--clr-neon-yellow);
     border-radius: .25em;
-    text-shadow: 
+    text-shadow:
         0 0 .05em hsl(0 0% 100% / .25),
         0 0 .1em currentColor;
 
-    box-shadow: inset 0 0 0.50em 0 slategray, 0 0 0.50em 0 slategray;
+    box-shadow: inset 0 0 0.50em 0 var(--clr-neon-yellow), 0 0 0.50em 0 var(--clr-neon-yellow);
 }
 
-.card {
-    
-    color: var(--clr-neon4);
-      background: var(--clr-main-bg);
-        border: var(--clr-neon4) 2px solid;
+#money {
+    border: var(--clr-neon-green) 2px solid;
+    color: var(--clr-neon-green);
     border-radius: .25em;
-    text-shadow: 
+    text-shadow:
+        0 0 .05em hsl(0 0% 100% / .25),
+        0 0 .1em currentColor;
+
+    box-shadow: inset 0 0 0.50em 0 var(--clr-neon-green), 0 0 0.50em 0 var(--clr-neon-green);
+}
+
+.card-red {
+
+    color: var(--clr-neon-red);
+    border: var(--clr-neon-red) 2px solid;
+    border-radius: .25em;
+    text-shadow:
         0 0 .1em hsl(0 0% 100% / .25),
         0 0 .3em currentColor;
 
-    box-shadow: inset 0 0 0.75em 0 var(--clr-neon4), 0 0 0.75em 0 var(--clr-neon4);
+    box-shadow: inset 0 0 0.75em 0 var(--clr-neon-red), 0 0 0.75em 0 var(--clr-neon-red);
 
 }
 
+.card-blue {
+
+    color: var(--clr-neon-blue);
+    background: var(--clr-main-bg);
+    border: var(--clr-neon-blue) 2px solid;
+    border-radius: .25em;
+    text-shadow:
+        0 0 .1em hsl(0 0% 100% / .25),
+        0 0 .3em currentColor;
+
+    box-shadow: inset 0 0 0.75em 0 var(--clr-neon-blue), 0 0 0.75em 0 var(--clr-neon-blue);
+
+}
+
+
+
 button {
-    color: var(--clr-neon2);
+    color: white;
     cursor: pointer;
     background: var(--clr-main-bg);
     text-decoration: none;
-    border: var(--clr-neon2) 2px solid;
+    border: var(--clr-neon-purple) 2px solid;
     border-radius: .25em;
-    text-shadow: 
+    text-shadow:
         0 0 .1em hsl(0 0% 100% / .25),
-        0 0 .3em currentColor;
+        0 0 .3em var(--clr-neon-purple);
 
-    box-shadow: inset 0 0 0.75em 0 var(--clr-neon2), 0 0 0.75em 0 var(--clr-neon2);
+    box-shadow: inset 0 0 0.75em 0 var(--clr-neon-purple), 0 0 0.75em 0 var(--clr-neon-purple);
 
 }
 
 button:disabled {
     cursor: auto;
-    color: var(--clr-neon3);
-    border: var(--clr-neon3) 2px solid
+    color: var(--clr-main-bg);
+    border: var(--clr-neon-purple) .5px solid
 }

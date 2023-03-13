@@ -258,7 +258,7 @@ const render = {
             //// iterates over dCards array, creating a new DOM element and appending it to the parent div
             game.dealerCards.forEach(card => {
                 let nextCardEl = document.createElement('div')
-                nextCardEl.classList.add('card')
+                nextCardEl.classList.add('card', 'card-blue')
                 nextCardEl.textContent = card.rank // will need to refactor this to accept all the information that will actually be contained in each card in the array (suit, value)
                 dealerHandEl.appendChild(nextCardEl)
             })
@@ -266,7 +266,7 @@ const render = {
             game.playerCards.forEach(card => {
                 // if statement needed, as above
                 let newCardEl = document.createElement('div')
-                newCardEl.classList.add('card')
+                newCardEl.classList.add('card', 'card-red')
                 newCardEl.textContent = card.rank // refactor needed, as above
                 playerHandEl.appendChild(newCardEl)
             })
@@ -277,7 +277,7 @@ const render = {
         atHit: function () {
             console.log('Rendering hit')
             let nextCardEl = document.createElement('div')
-            nextCardEl.classList.add('card')
+            nextCardEl.classList.add('card', 'card-red')
             nextCardEl.textContent = game.playerCards[game.playerCards.length - 1].rank // will need to refactor this to accept all the information that will actually be contained in each card in the array (suit, value)
             playerHandEl.appendChild(nextCardEl)
         },
@@ -286,16 +286,12 @@ const render = {
 
         atDealerHit: function () {
             let nextCardEl = document.createElement('div')
-            nextCardEl.classList.add('card')
+            nextCardEl.classList.add('card', 'card-blue')
             nextCardEl.textContent = game.dealerCards[game.dealerCards.length - 1].rank // will need to refactor this to accept all the information that will actually be contained in each card in the array (suit, value)
             dealerHandEl.appendChild(nextCardEl)
 
         },
 
-        // atStand: function () {
-        //     console.log('Rendering stand')
-
-        // }
     },
 
     messages: {
@@ -342,6 +338,10 @@ const render = {
         let allCardEls = document.querySelectorAll('.card')
         allCardEls.forEach(cardEl => {
             cardEl.remove()
+        })
+        let allMessageEls = messagesEl.querySelectorAll('p')
+        allMessageEls.forEach(messageEl => {
+            messageEl.remove()
         })
     },
 

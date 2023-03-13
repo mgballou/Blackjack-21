@@ -1,6 +1,5 @@
 * {
     box-sizing: border-box;
-    /* border: 1px solid red; */
 }
 
 
@@ -8,8 +7,6 @@ main {
     /* gameboard size should be a rectangle that takes up the majority of the window space */
     width: 90vmin;
     height: 80vmin; 
-    /* width: 75%;
-    height: 40%; */
     margin: auto;
     /* creates a grid container for the gameboard */
     display: grid;
@@ -33,7 +30,7 @@ aside {
     display: flex;
     flex-direction: column;
     justify-content:space-around;
-    /* border: 2px solid orange; */
+  
     
     
 }
@@ -45,15 +42,9 @@ main > div {
 
 }
 
-/* aside > div {
-   
-
-} */
 
 p {
-    /* font-size: 1.5vmin; */
     margin: .25em 0;
-    /* border: 1px solid steelblue; */
     text-align: center;
     align-self: center;
     
@@ -62,11 +53,8 @@ p {
 
 
 .card {
-    border: 1px solid red;
     height: 18vmin;
     width: 12vmin;
-    /* height: 18vmax;
-    width: 12vmax; */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -92,7 +80,6 @@ p {
 
 #messages {
     height: 40vmin;
-    /* height: 40vmax; */
     border: 2px dotted black;
     display: flex;
     flex-direction: column;
@@ -110,11 +97,9 @@ p {
 
 #buttons {
     height: 25vmin;
-    /* height: 25vmax; */
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr 1fr;
-    border: 1px solid purple;
     grid-gap: 1.5em;
     margin: .5em;
 }
@@ -126,7 +111,6 @@ p {
 #dealer-hand {
     grid-column: 1;
     grid-row: 2;
-    /* border: 2px solid green; */
       
     
 }
@@ -134,5 +118,4 @@ p {
 #player-hand {
     grid-column: 1;
     grid-row: 3;
-    /* border: 2px solid blue; */
     }
