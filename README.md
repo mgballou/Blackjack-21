@@ -23,17 +23,19 @@ You start the game with $1000 and can continue winning as long as you still have
 
 ## Technologies Used:
 
-HTML
-CSS
-JavaScript
+HTML  
+CSS  
+JavaScript  
 
 ## Getting Started:
 
-Navigate to the game using this link - https://mgballou.github.io/Blackjack-21/
+Navigate to the game using this link - https://mgballou.github.io/Blackjack-21/  
 
-Start a new hand by selecting an amount to bet. Keep playing until you've lost all your money! Click 'Reset Game' at any time to start over.
+Start a new hand by selecting an amount to bet. Keep playing until you've lost all your money! Click 'Reset Game' at any time to start over.  
 
 ## Next steps:
 
-Improved UI & updated styling
+Improved UI & updated styling  
 Time delay through the gameplay loop
+Hidden first card for dealer  
+Icons of suits included in interface  
